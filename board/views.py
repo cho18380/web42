@@ -8,19 +8,30 @@ from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.http import HttpResponseNotAllowed
 
+
 from .models import *
 from .forms import *
 
-#logger = logging.getLogger('pybo')
+#logger = logging.getLogger('')
 
 
 
-#@login_required(login_url='common:login')
+@login_required(login_url='common:login')
 def home(request):
     #logger.info("INFO 레벨로 출력")
     page = request.GET.get('page', '1')  # 페이지
     kw = request.GET.get('kw', '')  # 검색어
     post_list = Post.objects.order_by('-create_date')
+    board_announce = Post.objects.filter(board_name='announce')
+    board_daretalk = Post.objects.filter(board_name='daretalk')
+    board_labnewsroom = Post.objects.filter(board_name='labnewsroom')
+    board_projectex = Post.objects.filter(board_name='projectex')
+    board_info = Post.objects.filter(board_name='info')
+    board_ref = Post.objects.filter(board_name='ref')
+    board_weeklynews = Post.objects.filter(board_name='weeklynews')
+    board_ceotalk = Post.objects.filter(board_name='ceotalk')
+    board_client = Post.objects.filter(board_name='client')
+    board_forum = Post.objects.filter(board_name='forum')
     if kw:
         post_list = post_list.filter(
             Q(subject__icontains=kw) |  # 제목
@@ -29,36 +40,50 @@ def home(request):
             Q(author__username__icontains=kw) |  # 질문 글쓴이
             Q(comment__author__username__icontains=kw)  # 답변 글쓴이
         ).distinct()
-    paginator = Paginator(post_list, 10)  # 페이지당 10개씩 보여주기
+    paginator = Paginator(post_list, 7)  # 페이지당 10개씩 보여주기
     page_obj = paginator.get_page(page)
-    context = {'post_list': page_obj, 'page': page, 'kw': kw}
+    context = {
+        'post_list': page_obj,
+        'page': page,
+        'kw': kw, 
+        'board_announce':board_announce,
+        'board_daretalk':board_daretalk,
+        'board_labnewsroom':board_labnewsroom,
+        'board_projectex':board_projectex,
+        'board_info':board_info,
+        'board_ref':board_ref,
+        'board_weeklynews':board_weeklynews,
+        'board_ceotalk':board_ceotalk,
+        'board_client':board_client,
+        'board_forum':board_forum,
+        }
     return render(request, 'home.html', context)
 
 
-#@login_required(login_url='common:login')
+@login_required(login_url='common:login')
 def detail(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
     context = {'post': post}
     return render(request, 'post_detail.html', context)
 
 
-#@login_required(login_url='common:login')
+@login_required(login_url='common:login')
 def post_create(request):
     if request.method == 'POST':
-        form = PostForm(request.POST)
+        form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user  # author 속성에 로그인 계정 저장
             post.create_date = timezone.now()
             post.save()
-            return redirect('home.html')
+            return redirect('board:index')
     else:
         form = PostForm()
     context = {'form': form}
     return render(request, 'create_post.html', context)
 
 
-#@login_required(login_url='common:login')
+@login_required(login_url='common:login')
 def post_modify(request, post_id):
     post = get_object_or_404(post, pk=post_id)
     if request.user != post.author:
@@ -77,7 +102,7 @@ def post_modify(request, post_id):
     return render(request, 'post_form.html', context)
 
 
-#@login_required(login_url='common:login')
+@login_required(login_url='common:login')
 def post_delete(request, post_id):
     post = get_object_or_404(post, pk=post_id)
     if request.user != post.author:
@@ -86,18 +111,7 @@ def post_delete(request, post_id):
     post.delete()
     return redirect('pybo:index')
 
-
-#@login_required(login_url='common:login')
-def post_vote(request, post_id):
-    post = get_object_or_404(post, pk=post_id)
-    if request.user == post.author:
-        messages.error(request, '본인이 작성한 글은 추천할수 없습니다')
-    else:
-        post.voter.add(request.user)
-    return redirect('pybo:detail', post_id=post.id)
-
-
-#@login_required(login_url='common:login')
+@login_required(login_url='common:login')
 def comment_create(request, post_id):
     post = get_object_or_404(post, pk=post_id)
     if request.method == "POST":
@@ -116,7 +130,7 @@ def comment_create(request, post_id):
     return render(request, 'pybo/post_detail.html', context)
 
 
-#@login_required(login_url='common:login')
+@login_required(login_url='common:login')
 def comment_modify(request, comment_id):
     comment = get_object_or_404(comment, pk=comment_id)
     if request.user != comment.author:
@@ -136,7 +150,7 @@ def comment_modify(request, comment_id):
     return render(request, 'pybo/comment_form.html', context)
 
 
-#@login_required(login_url='common:login')
+@login_required(login_url='common:login')
 def comment_delete(request, comment_id):
     comment = get_object_or_404(comment, pk=comment_id)
     if request.user != comment.author:
@@ -146,12 +160,50 @@ def comment_delete(request, comment_id):
     return redirect('pybo:detail', post_id=comment.post.id)
 
 
-#@login_required(login_url='common:login')
-def comment_vote(request, comment_id):
-    comment = get_object_or_404(comment, pk=comment_id)
-    if request.user == comment.author:
-        messages.error(request, '본인이 작성한 글은 추천할수 없습니다')
-    else:
-        comment.voter.add(request.user)
-    return redirect('{}#comment_{}'.format(
-                resolve_url('pybo:detail', post_id=comment.post.id), comment.id))
+
+
+
+"""
+@login_required(login_url='common:login')
+def home(request):
+    #logger.info("INFO 레벨로 출력")
+    page = request.GET.get('page', '1')  # 페이지
+    kw = request.GET.get('kw', '')  # 검색어
+    post_list = Post.objects.order_by('-create_date')
+    board_announce = Post.objects.filter(board_name='announce')
+    board_daretalk = Post.objects.filter(board_name='daretalk')
+    board_labnewsroom = Post.objects.filter(board_name='labnewsroom')
+    board_projectex = Post.objects.filter(board_name='projectex')
+    board_info = Post.objects.filter(board_name='info')
+    board_ref = Post.objects.filter(board_name='ref')
+    board_weeklynews = Post.objects.filter(board_name='weeklynews')
+    board_ceotalk = Post.objects.filter(board_name='ceotalk')
+    board_client = Post.objects.filter(board_name='client')
+    board_forum = Post.objects.filter(board_name='forum')
+    if kw:
+        post_list = post_list.filter(
+            Q(subject__icontains=kw) |  # 제목
+            Q(content__icontains=kw) |  # 내용
+            Q(comment__content__icontains=kw) |  # 답변내용
+            Q(author__username__icontains=kw) |  # 질문 글쓴이
+            Q(comment__author__username__icontains=kw)  # 답변 글쓴이
+        ).distinct()
+    paginator = Paginator(post_list, 7)  # 페이지당 10개씩 보여주기
+    page_obj = paginator.get_page(page)
+    context = {
+        'post_list': page_obj,
+        'page': page,
+        'kw': kw, 
+        'board_announce':board_announce,
+        'board_daretalk':board_daretalk,
+        'board_labnewsroom':board_labnewsroom,
+        'board_projectex':board_projectex,
+        'board_info':board_info,
+        'board_ref':board_ref,
+        'board_weeklynews':board_weeklynews,
+        'board_ceotalk':board_ceotalk,
+        'board_client':board_client,
+        'board_forum':board_forum,
+        }
+    return render(request, 'home.html', context)
+    """

@@ -6,50 +6,664 @@
 
 <div class="flex-col h-full p-4 sm:ml-64 mt-16">
     <div class="flex flex-row h-96 bg-white">
-        <div class="rounded-lg overflow-y-hidden w-1/2 m-2 border-orange-500">
-            <div class="">
+        <div class="rounded-lg overflow-y-hidden w-1/2 m-2 shadow border border-gray-200">
+            <div class="p-3 rounded-lg">
                 <div>
                     <p class="font-bold bg-orange-100 px-6 py-2">공지사항</p>
                 </div>    
                 <table class="table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th scope="col" class="px-6 py-3">내용</th>
-                            <th scope="col" class="px-6 py-3">날짜</th>
-                            <th scope="col" class="px-6 py-3">작성자</th>
+                            <th scope="col" class="w-8/12 px-6 py-2">내용</th>
+                            <th scope="col" class="w-2/12 px-6 py-2">날짜</th>
+                            <th scope="col" class="w-2/12 px-6 py-2">작성자</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% if post_list %}
-                        {% for post in post_list %}
+                        {% for post in board_announce %}
                         <tr class="text-xs bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                            <td class="px-6 py-2">{{ post.subject }}</td>
+                            <td class="px-6 py-2"><a href="{% url 'board:detail' post.id %}">{{ post.subject }}</a></td>
                             <td class="px-6 py-2">{{ post.create_date|date:"Y-m-d" }}</td>
                             <td class="px-6 py-2">{{ post.author }}</td>
                         </tr>
                         {% endfor %}
-                        {% endif %}
                     </tbody>
                 </table>
+                <div class="grid grid-cols-10 p-2">
+                    <!-- 페이징처리 시작 -->
+                    <nav aria-label="Page navigation example" class="col-start-4 col-span-4 py-2">
+                        <ul class="inline-flex -space-x-px">
+                            <!-- 이전 페이지 -->
+                            {% if post_list.has_previous %}
+                            <li>
+                                <a href="?page={{ post_list.previous_page_number }}" class="text-xs px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">이전</a>
+                            </li>
+                            {% else %}
+                            <li>
+                                <a href="#" class="text-xs px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" tabindex="-1" aria-disabled="true">이전</a>
+                            </li>
+                            {% endif %}
+                            <!-- 페이지 리스트 -->
+                            {% for page_number in post_list.paginator.page_range %}
+                            {% if page_number ==  post_list.number %}
+                            <li>
+                                <a href="?page={{ page_number }}" aria-current="page" class="text-xs px-3 py-2 leading-tight text-white bg-orange-500 border border-gray-300 hover:bg-orange-600 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
+                            </li>
+                            {% else %}
+                            <li>
+                                <a href="?page={{ page_number }}" class="text-xs px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+                            <!-- 다음페이지 -->
+                            {% if post_list.has_next %}
+                            <li>
+                                <a href="?page={{ post_list.next_page_number }}"  class="text-xs px-3 py-2 rounded-r-lg text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">다음</a>
+                            </li>
+                            {% else %}
+                            <li>
+                                <a href="#" tabindex="-1" aria-disabled="true" class="text-xs px-3 py-2 leading-tight rounded-r-lg text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">다음</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                      </nav>  
+                    <!-- 페이징처리 끝 -->
+                </div>
             </div>
         </div>
-        <div class="w-1/2 m-2 bg-slate-400"></div>
+        <div class="rounded-lg overflow-y-hidden w-1/2 m-2 shadow border border-gray-200">
+            <div class="p-3 rounded-lg">
+                <div>
+                    <p class="font-bold bg-orange-100 px-6 py-2">Dare Talk</p>
+                </div>    
+                <table class="table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-6 py-2">내용</th>
+                            <th scope="col" class="px-6 py-2">날짜</th>
+                            <th scope="col" class="px-6 py-2">작성자</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for post in board_daretalk %}
+                        <tr class="text-xs bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <td class="px-6 py-2"><a href="{% url 'board:detail' post.id %}">{{ post.subject }}</a></td>
+                            <td class="px-6 py-2">{{ post.create_date|date:"Y-m-d" }}</td>
+                            <td class="px-6 py-2">{{ post.author }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="grid grid-cols-10 p-2">
+                    <!-- 페이징처리 시작 -->
+                    <nav aria-label="Page navigation example" class="col-start-4 col-span-4 py-2">
+                        <ul class="inline-flex -space-x-px">
+                            <!-- 이전 페이지 -->
+                            {% if post_list.has_previous %}
+                            <li>
+                                <a href="?page={{ post_list.previous_page_number }}" class="text-xs px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">이전</a>
+                            </li>
+                            {% else %}
+                            <li>
+                                <a href="#" class="text-xs px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" tabindex="-1" aria-disabled="true">이전</a>
+                            </li>
+                            {% endif %}
+                            <!-- 페이지 리스트 -->
+                            {% for page_number in post_list.paginator.page_range %}
+                            {% if page_number ==  post_list.number %}
+                            <li>
+                                <a href="?page={{ page_number }}" aria-current="page" class="text-xs px-3 py-2 leading-tight text-white bg-orange-500 border border-gray-300 hover:bg-orange-600 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
+                            </li>
+                            {% else %}
+                            <li>
+                                <a href="?page={{ page_number }}" class="text-xs px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+                            <!-- 다음페이지 -->
+                            {% if post_list.has_next %}
+                            <li>
+                                <a href="?page={{ post_list.next_page_number }}"  class="text-xs px-3 py-2 rounded-r-lg text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">다음</a>
+                            </li>
+                            {% else %}
+                            <li>
+                                <a href="#" tabindex="-1" aria-disabled="true" class="text-xs px-3 py-2 leading-tight rounded-r-lg text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">다음</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                      </nav>  
+                    <!-- 페이징처리 끝 -->
+                </div>
+            </div>
+        </div>
     </div>
     <div class="flex flex-row h-96 bg-white border-orange-500">
-        <div class="w-1/2 m-2 bg-slate-400"></div>
-        <div class="w-1/2 m-2 bg-slate-400"></div>
+        <div class="rounded-lg overflow-y-hidden w-1/2 m-2 shadow border border-gray-200">
+            <div class="p-3 rounded-lg">
+                <div>
+                    <p class="font-bold bg-orange-100 px-6 py-2">CEO TALK</p>
+                </div>    
+                <table class="table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-6 py-2">내용</th>
+                            <th scope="col" class="px-6 py-2">날짜</th>
+                            <th scope="col" class="px-6 py-2">작성자</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for post in board_ceotalk %}
+                        <tr class="text-xs bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <td class="px-6 py-2"><a href="{% url 'board:detail' post.id %}">{{ post.subject }}</a></td>
+                            <td class="px-6 py-2">{{ post.create_date|date:"Y-m-d" }}</td>
+                            <td class="px-6 py-2">{{ post.author }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="grid grid-cols-10 p-2">
+                    <!-- 페이징처리 시작 -->
+                    <nav aria-label="Page navigation example" class="col-start-4 col-span-4 py-2">
+                        <ul class="inline-flex -space-x-px">
+                            <!-- 이전 페이지 -->
+                            {% if post_list.has_previous %}
+                            <li>
+                                <a href="?page={{ post_list.previous_page_number }}" class="text-xs px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">이전</a>
+                            </li>
+                            {% else %}
+                            <li>
+                                <a href="#" class="text-xs px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" tabindex="-1" aria-disabled="true">이전</a>
+                            </li>
+                            {% endif %}
+                            <!-- 페이지 리스트 -->
+                            {% for page_number in post_list.paginator.page_range %}
+                            {% if page_number ==  post_list.number %}
+                            <li>
+                                <a href="?page={{ page_number }}" aria-current="page" class="text-xs px-3 py-2 leading-tight text-white bg-orange-500 border border-gray-300 hover:bg-orange-600 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
+                            </li>
+                            {% else %}
+                            <li>
+                                <a href="?page={{ page_number }}" class="text-xs px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+                            <!-- 다음페이지 -->
+                            {% if post_list.has_next %}
+                            <li>
+                                <a href="?page={{ post_list.next_page_number }}"  class="text-xs px-3 py-2 rounded-r-lg text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">다음</a>
+                            </li>
+                            {% else %}
+                            <li>
+                                <a href="#" tabindex="-1" aria-disabled="true" class="text-xs px-3 py-2 leading-tight rounded-r-lg text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">다음</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                      </nav>  
+                    <!-- 페이징처리 끝 -->
+                </div>
+            </div>
+        </div>
+        <div class="rounded-lg overflow-y-hidden w-1/2 m-2 shadow border border-gray-200">
+            <div class="p-3 rounded-lg">
+                <div>
+                    <p class="font-bold bg-orange-100 px-6 py-2">프로젝트 사례 공유</p>
+                </div>    
+                <table class="table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-6 py-2">내용</th>
+                            <th scope="col" class="px-6 py-2">날짜</th>
+                            <th scope="col" class="px-6 py-2">작성자</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for post in board_projectex %}
+                        <tr class="text-xs bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <td class="px-6 py-2"><a href="{% url 'board:detail' post.id %}">{{ post.subject }}</a></td>
+                            <td class="px-6 py-2">{{ post.create_date|date:"Y-m-d" }}</td>
+                            <td class="px-6 py-2">{{ post.author }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="grid grid-cols-10 p-2">
+                    <!-- 페이징처리 시작 -->
+                    <nav aria-label="Page navigation example" class="col-start-4 col-span-4 py-2">
+                        <ul class="inline-flex -space-x-px">
+                            <!-- 이전 페이지 -->
+                            {% if post_list.has_previous %}
+                            <li>
+                                <a href="?page={{ post_list.previous_page_number }}" class="text-xs px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">이전</a>
+                            </li>
+                            {% else %}
+                            <li>
+                                <a href="#" class="text-xs px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" tabindex="-1" aria-disabled="true">이전</a>
+                            </li>
+                            {% endif %}
+                            <!-- 페이지 리스트 -->
+                            {% for page_number in post_list.paginator.page_range %}
+                            {% if page_number ==  post_list.number %}
+                            <li>
+                                <a href="?page={{ page_number }}" aria-current="page" class="text-xs px-3 py-2 leading-tight text-white bg-orange-500 border border-gray-300 hover:bg-orange-600 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
+                            </li>
+                            {% else %}
+                            <li>
+                                <a href="?page={{ page_number }}" class="text-xs px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+                            <!-- 다음페이지 -->
+                            {% if post_list.has_next %}
+                            <li>
+                                <a href="?page={{ post_list.next_page_number }}"  class="text-xs px-3 py-2 rounded-r-lg text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">다음</a>
+                            </li>
+                            {% else %}
+                            <li>
+                                <a href="#" tabindex="-1" aria-disabled="true" class="text-xs px-3 py-2 leading-tight rounded-r-lg text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">다음</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                      </nav>  
+                    <!-- 페이징처리 끝 -->
+                </div>
+            </div>
+        </div>
     </div>    
     <div class="flex flex-row h-96 bg-white border-orange-500">
-        <div class="w-1/2 m-2 bg-slate-400"></div>
-        <div class="w-1/2 m-2 bg-slate-400"></div>
+        <div class="rounded-lg overflow-y-hidden w-1/2 m-2 shadow border border-gray-200">
+            <div class="p-3 rounded-lg">
+                <div>
+                    <p class="font-bold bg-orange-100 px-6 py-2">생활정보</p>
+                </div>    
+                <table class="table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-6 py-2">내용</th>
+                            <th scope="col" class="px-6 py-2">날짜</th>
+                            <th scope="col" class="px-6 py-2">작성자</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for post in board_info %}
+                        <tr class="text-xs bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <td class="px-6 py-2"><a href="{% url 'board:detail' post.id %}">{{ post.subject }}</a></td>
+                            <td class="px-6 py-2">{{ post.create_date|date:"Y-m-d" }}</td>
+                            <td class="px-6 py-2">{{ post.author }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="grid grid-cols-10 p-2">
+                    <!-- 페이징처리 시작 -->
+                    <nav aria-label="Page navigation example" class="col-start-4 col-span-4 py-2">
+                        <ul class="inline-flex -space-x-px">
+                            <!-- 이전 페이지 -->
+                            {% if post_list.has_previous %}
+                            <li>
+                                <a href="?page={{ post_list.previous_page_number }}" class="text-xs px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">이전</a>
+                            </li>
+                            {% else %}
+                            <li>
+                                <a href="#" class="text-xs px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" tabindex="-1" aria-disabled="true">이전</a>
+                            </li>
+                            {% endif %}
+                            <!-- 페이지 리스트 -->
+                            {% for page_number in post_list.paginator.page_range %}
+                            {% if page_number ==  post_list.number %}
+                            <li>
+                                <a href="?page={{ page_number }}" aria-current="page" class="text-xs px-3 py-2 leading-tight text-white bg-orange-500 border border-gray-300 hover:bg-orange-600 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
+                            </li>
+                            {% else %}
+                            <li>
+                                <a href="?page={{ page_number }}" class="text-xs px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+                            <!-- 다음페이지 -->
+                            {% if post_list.has_next %}
+                            <li>
+                                <a href="?page={{ post_list.next_page_number }}"  class="text-xs px-3 py-2 rounded-r-lg text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">다음</a>
+                            </li>
+                            {% else %}
+                            <li>
+                                <a href="#" tabindex="-1" aria-disabled="true" class="text-xs px-3 py-2 leading-tight rounded-r-lg text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">다음</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                      </nav>  
+                    <!-- 페이징처리 끝 -->
+                </div>
+            </div>
+        </div>
+        <div class="rounded-lg overflow-y-hidden w-1/2 m-2 shadow border border-gray-200">
+            <div class="p-3 rounded-lg">
+                <div>
+                    <p class="font-bold bg-orange-100 px-6 py-2">자료실</p>
+                </div>    
+                <table class="table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-6 py-2">내용</th>
+                            <th scope="col" class="px-6 py-2">날짜</th>
+                            <th scope="col" class="px-6 py-2">작성자</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for post in board_ref %}
+                        <tr class="text-xs bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <td class="px-6 py-2"><a href="{% url 'board:detail' post.id %}">{{ post.subject }}</a></td>
+                            <td class="px-6 py-2">{{ post.create_date|date:"Y-m-d" }}</td>
+                            <td class="px-6 py-2">{{ post.author }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="grid grid-cols-10 p-2">
+                    <!-- 페이징처리 시작 -->
+                    <nav aria-label="Page navigation example" class="col-start-4 col-span-4 py-2">
+                        <ul class="inline-flex -space-x-px">
+                            <!-- 이전 페이지 -->
+                            {% if post_list.has_previous %}
+                            <li>
+                                <a href="?page={{ post_list.previous_page_number }}" class="text-xs px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">이전</a>
+                            </li>
+                            {% else %}
+                            <li>
+                                <a href="#" class="text-xs px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" tabindex="-1" aria-disabled="true">이전</a>
+                            </li>
+                            {% endif %}
+                            <!-- 페이지 리스트 -->
+                            {% for page_number in post_list.paginator.page_range %}
+                            {% if page_number ==  post_list.number %}
+                            <li>
+                                <a href="?page={{ page_number }}" aria-current="page" class="text-xs px-3 py-2 leading-tight text-white bg-orange-500 border border-gray-300 hover:bg-orange-600 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
+                            </li>
+                            {% else %}
+                            <li>
+                                <a href="?page={{ page_number }}" class="text-xs px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+                            <!-- 다음페이지 -->
+                            {% if post_list.has_next %}
+                            <li>
+                                <a href="?page={{ post_list.next_page_number }}"  class="text-xs px-3 py-2 rounded-r-lg text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">다음</a>
+                            </li>
+                            {% else %}
+                            <li>
+                                <a href="#" tabindex="-1" aria-disabled="true" class="text-xs px-3 py-2 leading-tight rounded-r-lg text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">다음</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                      </nav>  
+                    <!-- 페이징처리 끝 -->
+                </div>
+            </div>
+        </div>
     </div>    
     <div class="flex flex-row h-96 bg-white border-orange-500">
-        <div class="w-1/2 m-2 bg-slate-400"></div>
-        <div class="w-1/2 m-2 bg-slate-400"></div>
+        <div class="rounded-lg overflow-y-hidden w-1/2 m-2 shadow border border-gray-200">
+            <div class="p-3 rounded-lg">
+                <div>
+                    <p class="font-bold bg-orange-100 px-6 py-2">Weekly News</p>
+                </div>    
+                <table class="table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-6 py-2">내용</th>
+                            <th scope="col" class="px-6 py-2">날짜</th>
+                            <th scope="col" class="px-6 py-2">작성자</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for post in board_weeklynews %}
+                        <tr class="text-xs bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <td class="px-6 py-2"><a href="{% url 'board:detail' post.id %}">{{ post.subject }}</a></td>
+                            <td class="px-6 py-2">{{ post.create_date|date:"Y-m-d" }}</td>
+                            <td class="px-6 py-2">{{ post.author }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="grid grid-cols-10 p-2">
+                    <!-- 페이징처리 시작 -->
+                    <nav aria-label="Page navigation example" class="col-start-4 col-span-4 py-2">
+                        <ul class="inline-flex -space-x-px">
+                            <!-- 이전 페이지 -->
+                            {% if post_list.has_previous %}
+                            <li>
+                                <a href="?page={{ post_list.previous_page_number }}" class="text-xs px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">이전</a>
+                            </li>
+                            {% else %}
+                            <li>
+                                <a href="#" class="text-xs px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" tabindex="-1" aria-disabled="true">이전</a>
+                            </li>
+                            {% endif %}
+                            <!-- 페이지 리스트 -->
+                            {% for page_number in post_list.paginator.page_range %}
+                            {% if page_number ==  post_list.number %}
+                            <li>
+                                <a href="?page={{ page_number }}" aria-current="page" class="text-xs px-3 py-2 leading-tight text-white bg-orange-500 border border-gray-300 hover:bg-orange-600 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
+                            </li>
+                            {% else %}
+                            <li>
+                                <a href="?page={{ page_number }}" class="text-xs px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+                            <!-- 다음페이지 -->
+                            {% if post_list.has_next %}
+                            <li>
+                                <a href="?page={{ post_list.next_page_number }}"  class="text-xs px-3 py-2 rounded-r-lg text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">다음</a>
+                            </li>
+                            {% else %}
+                            <li>
+                                <a href="#" tabindex="-1" aria-disabled="true" class="text-xs px-3 py-2 leading-tight rounded-r-lg text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">다음</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                      </nav>  
+                    <!-- 페이징처리 끝 -->
+                </div>
+            </div>
+        </div>
+        <div class="rounded-lg overflow-y-hidden w-1/2 m-2 shadow border border-gray-200">
+            <div class="p-3 rounded-lg">
+                <div>
+                    <p class="font-bold bg-orange-100 px-6 py-2">연구소 뉴스룸</p>
+                </div>    
+                <table class="table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-6 py-2">내용</th>
+                            <th scope="col" class="px-6 py-2">날짜</th>
+                            <th scope="col" class="px-6 py-2">작성자</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for post in board_labnewsroom %}
+                        <tr class="text-xs bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <td class="px-6 py-2"><a href="{% url 'board:detail' post.id %}">{{ post.subject }}</a></td>
+                            <td class="px-6 py-2">{{ post.create_date|date:"Y-m-d" }}</td>
+                            <td class="px-6 py-2">{{ post.author }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="grid grid-cols-10 p-2">
+                    <!-- 페이징처리 시작 -->
+                    <nav aria-label="Page navigation example" class="col-start-4 col-span-4 py-2">
+                        <ul class="inline-flex -space-x-px">
+                            <!-- 이전 페이지 -->
+                            {% if post_list.has_previous %}
+                            <li>
+                                <a href="?page={{ post_list.previous_page_number }}" class="text-xs px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">이전</a>
+                            </li>
+                            {% else %}
+                            <li>
+                                <a href="#" class="text-xs px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" tabindex="-1" aria-disabled="true">이전</a>
+                            </li>
+                            {% endif %}
+                            <!-- 페이지 리스트 -->
+                            {% for page_number in post_list.paginator.page_range %}
+                            {% if page_number ==  post_list.number %}
+                            <li>
+                                <a href="?page={{ page_number }}" aria-current="page" class="text-xs px-3 py-2 leading-tight text-white bg-orange-500 border border-gray-300 hover:bg-orange-600 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
+                            </li>
+                            {% else %}
+                            <li>
+                                <a href="?page={{ page_number }}" class="text-xs px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+                            <!-- 다음페이지 -->
+                            {% if post_list.has_next %}
+                            <li>
+                                <a href="?page={{ post_list.next_page_number }}"  class="text-xs px-3 py-2 rounded-r-lg text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">다음</a>
+                            </li>
+                            {% else %}
+                            <li>
+                                <a href="#" tabindex="-1" aria-disabled="true" class="text-xs px-3 py-2 leading-tight rounded-r-lg text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">다음</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                      </nav>  
+                    <!-- 페이징처리 끝 -->
+                </div>
+            </div>
+        </div>
     </div>    
     <div class="flex flex-row h-96 bg-white border-orange-500">
-        <div class="w-1/2 m-2 bg-slate-400"></div>
-        <div class="w-1/2 m-2 bg-slate-400"></div>
+        <div class="rounded-lg overflow-y-hidden w-1/2 m-2 shadow border border-gray-200">
+            <div class="p-3 rounded-lg">
+                <div>
+                    <p class="font-bold bg-orange-100 px-6 py-2">고객사 동향</p>
+                </div>    
+                <table class="table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-6 py-2">내용</th>
+                            <th scope="col" class="px-6 py-2">날짜</th>
+                            <th scope="col" class="px-6 py-2">작성자</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for post in board_client %}
+                        <tr class="text-xs bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <td class="px-6 py-2"><a href="{% url 'board:detail' post.id %}">{{ post.subject }}</a></td>
+                            <td class="px-6 py-2">{{ post.create_date|date:"Y-m-d" }}</td>
+                            <td class="px-6 py-2">{{ post.author }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="grid grid-cols-10 p-2">
+                    <!-- 페이징처리 시작 -->
+                    <nav aria-label="Page navigation example" class="col-start-4 col-span-4 py-2">
+                        <ul class="inline-flex -space-x-px">
+                            <!-- 이전 페이지 -->
+                            {% if post_list.has_previous %}
+                            <li>
+                                <a href="?page={{ post_list.previous_page_number }}" class="text-xs px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">이전</a>
+                            </li>
+                            {% else %}
+                            <li>
+                                <a href="#" class="text-xs px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" tabindex="-1" aria-disabled="true">이전</a>
+                            </li>
+                            {% endif %}
+                            <!-- 페이지 리스트 -->
+                            {% for page_number in post_list.paginator.page_range %}
+                            {% if page_number ==  post_list.number %}
+                            <li>
+                                <a href="?page={{ page_number }}" aria-current="page" class="text-xs px-3 py-2 leading-tight text-white bg-orange-500 border border-gray-300 hover:bg-orange-600 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
+                            </li>
+                            {% else %}
+                            <li>
+                                <a href="?page={{ page_number }}" class="text-xs px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+                            <!-- 다음페이지 -->
+                            {% if post_list.has_next %}
+                            <li>
+                                <a href="?page={{ post_list.next_page_number }}"  class="text-xs px-3 py-2 rounded-r-lg text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">다음</a>
+                            </li>
+                            {% else %}
+                            <li>
+                                <a href="#" tabindex="-1" aria-disabled="true" class="text-xs px-3 py-2 leading-tight rounded-r-lg text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">다음</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                      </nav>  
+                    <!-- 페이징처리 끝 -->
+                </div>
+            </div>
+        </div>
+        <div class="rounded-lg overflow-y-hidden w-1/2 m-2 shadow border border-gray-200">
+            <div class="p-3 rounded-lg">
+                <div>
+                    <p class="font-bold bg-orange-100 px-6 py-2">토론방</p>
+                </div>    
+                <table class="table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-6 py-2">내용</th>
+                            <th scope="col" class="px-6 py-2">날짜</th>
+                            <th scope="col" class="px-6 py-2">작성자</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for post in board_forum %}
+                        <tr class="text-xs bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <td class="px-6 py-2"><a href="{% url 'board:detail' post.id %}">{{ post.subject }}</a></td>
+                            <td class="px-6 py-2">{{ post.create_date|date:"Y-m-d" }}</td>
+                            <td class="px-6 py-2">{{ post.author }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="grid grid-cols-10 p-2">
+                    <!-- 페이징처리 시작 -->
+                    <nav aria-label="Page navigation example" class="col-start-4 col-span-4 py-2">
+                        <ul class="inline-flex -space-x-px">
+                            <!-- 이전 페이지 -->
+                            {% if post_list.has_previous %}
+                            <li>
+                                <a href="?page={{ post_list.previous_page_number }}" class="text-xs px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">이전</a>
+                            </li>
+                            {% else %}
+                            <li>
+                                <a href="#" class="text-xs px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" tabindex="-1" aria-disabled="true">이전</a>
+                            </li>
+                            {% endif %}
+                            <!-- 페이지 리스트 -->
+                            {% for page_number in post_list.paginator.page_range %}
+                            {% if page_number ==  post_list.number %}
+                            <li>
+                                <a href="?page={{ page_number }}" aria-current="page" class="text-xs px-3 py-2 leading-tight text-white bg-orange-500 border border-gray-300 hover:bg-orange-600 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
+                            </li>
+                            {% else %}
+                            <li>
+                                <a href="?page={{ page_number }}" class="text-xs px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+                            <!-- 다음페이지 -->
+                            {% if post_list.has_next %}
+                            <li>
+                                <a href="?page={{ post_list.next_page_number }}"  class="text-xs px-3 py-2 rounded-r-lg text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">다음</a>
+                            </li>
+                            {% else %}
+                            <li>
+                                <a href="#" tabindex="-1" aria-disabled="true" class="text-xs px-3 py-2 leading-tight rounded-r-lg text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">다음</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                      </nav>  
+                    <!-- 페이징처리 끝 -->
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
