@@ -20,7 +20,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for post in board_announce %}
+                        {% for post in board_announce_list %}
                         <tr class="text-xs bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                             <td class="px-6 py-2"><a href="{% url 'board:detail' post.id %}">{{ post.subject }}</a></td>
                             <td class="px-6 py-2">{{ post.create_date|date:"Y-m-d" }}</td>
@@ -34,9 +34,9 @@
                     <nav aria-label="Page navigation example" class="col-start-4 col-span-4 py-2">
                         <ul class="inline-flex -space-x-px">
                             <!-- 이전 페이지 -->
-                            {% if post_list.has_previous %}
+                            {% if board_announce_list.has_previous %}
                             <li>
-                                <a href="?page={{ post_list.previous_page_number }}" class="text-xs px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">이전</a>
+                                <a href="?page_announce={{ board_announce_list.previous_page_number }}" class="text-xs px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">이전</a>
                             </li>
                             {% else %}
                             <li>
@@ -44,21 +44,21 @@
                             </li>
                             {% endif %}
                             <!-- 페이지 리스트 -->
-                            {% for page_number in post_list.paginator.page_range %}
-                            {% if page_number ==  post_list.number %}
+                            {% for page_number in board_announce_list.paginator.page_range %}
+                            {% if page_number ==  board_announce_list.number %}
                             <li>
-                                <a href="?page={{ page_number }}" aria-current="page" class="text-xs px-3 py-2 leading-tight text-white bg-orange-500 border border-gray-300 hover:bg-orange-600 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
+                                <a href="?page_announce={{ page_number }}" aria-current="page" class="text-xs px-3 py-2 leading-tight text-white bg-orange-500 border border-orange-500 hover:bg-orange-600 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
                             </li>
                             {% else %}
                             <li>
-                                <a href="?page={{ page_number }}" class="text-xs px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
+                                <a href="?page_announce={{ page_number }}" class="text-xs px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
                             </li>
                             {% endif %}
                             {% endfor %}
                             <!-- 다음페이지 -->
-                            {% if post_list.has_next %}
+                            {% if board_announce_list.has_next %}
                             <li>
-                                <a href="?page={{ post_list.next_page_number }}"  class="text-xs px-3 py-2 rounded-r-lg text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">다음</a>
+                                <a href="?page_announce={{ board_announce_list.next_page_number }}"  class="text-xs px-3 py-2 rounded-r-lg text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">다음</a>
                             </li>
                             {% else %}
                             <li>
@@ -85,7 +85,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for post in board_daretalk %}
+                        {% for post in board_daretalk_list %}
                         <tr class="text-xs bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                             <td class="px-6 py-2"><a href="{% url 'board:detail' post.id %}">{{ post.subject }}</a></td>
                             <td class="px-6 py-2">{{ post.create_date|date:"Y-m-d" }}</td>
@@ -99,9 +99,9 @@
                     <nav aria-label="Page navigation example" class="col-start-4 col-span-4 py-2">
                         <ul class="inline-flex -space-x-px">
                             <!-- 이전 페이지 -->
-                            {% if post_list.has_previous %}
+                            {% if board_daretalk_list.has_previous %}
                             <li>
-                                <a href="?page={{ post_list.previous_page_number }}" class="text-xs px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">이전</a>
+                                <a href="?page_daretalk={{ board_daretalk_list.previous_page_number }}" class="text-xs px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">이전</a>
                             </li>
                             {% else %}
                             <li>
@@ -109,21 +109,21 @@
                             </li>
                             {% endif %}
                             <!-- 페이지 리스트 -->
-                            {% for page_number in post_list.paginator.page_range %}
-                            {% if page_number ==  post_list.number %}
+                            {% for page_number in board_daretalk_list.paginator.page_range %}
+                            {% if page_number ==  board_daretalk_list.number %}
                             <li>
-                                <a href="?page={{ page_number }}" aria-current="page" class="text-xs px-3 py-2 leading-tight text-white bg-orange-500 border border-gray-300 hover:bg-orange-600 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
+                                <a href="?page_daretalk={{ page_number }}" aria-current="page" class="text-xs px-3 py-2 leading-tight text-white bg-orange-500 border border-orange-500 hover:bg-orange-600 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
                             </li>
                             {% else %}
                             <li>
-                                <a href="?page={{ page_number }}" class="text-xs px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
+                                <a href="?page_daretalk={{ page_number }}" class="text-xs px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
                             </li>
                             {% endif %}
                             {% endfor %}
                             <!-- 다음페이지 -->
-                            {% if post_list.has_next %}
+                            {% if board_daretalk_list.has_next %}
                             <li>
-                                <a href="?page={{ post_list.next_page_number }}"  class="text-xs px-3 py-2 rounded-r-lg text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">다음</a>
+                                <a href="?page_daretalk={{ board_daretalk_list.next_page_number }}"  class="text-xs px-3 py-2 rounded-r-lg text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">다음</a>
                             </li>
                             {% else %}
                             <li>
@@ -152,7 +152,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for post in board_ceotalk %}
+                        {% for post in board_ceotalk_list %}
                         <tr class="text-xs bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                             <td class="px-6 py-2"><a href="{% url 'board:detail' post.id %}">{{ post.subject }}</a></td>
                             <td class="px-6 py-2">{{ post.create_date|date:"Y-m-d" }}</td>
@@ -166,9 +166,9 @@
                     <nav aria-label="Page navigation example" class="col-start-4 col-span-4 py-2">
                         <ul class="inline-flex -space-x-px">
                             <!-- 이전 페이지 -->
-                            {% if post_list.has_previous %}
+                            {% if board_ceotalk_list.has_previous %}
                             <li>
-                                <a href="?page={{ post_list.previous_page_number }}" class="text-xs px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">이전</a>
+                                <a href="?page_ceotalk={{ board_ceotalk_list.previous_page_number }}" class="text-xs px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">이전</a>
                             </li>
                             {% else %}
                             <li>
@@ -176,21 +176,21 @@
                             </li>
                             {% endif %}
                             <!-- 페이지 리스트 -->
-                            {% for page_number in post_list.paginator.page_range %}
-                            {% if page_number ==  post_list.number %}
+                            {% for page_number in board_ceotalk_list.paginator.page_range %}
+                            {% if page_number ==  board_ceotalk_list.number %}
                             <li>
-                                <a href="?page={{ page_number }}" aria-current="page" class="text-xs px-3 py-2 leading-tight text-white bg-orange-500 border border-gray-300 hover:bg-orange-600 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
+                                <a href="?page_ceotalk={{ page_number }}" aria-current="page" class="text-xs px-3 py-2 leading-tight text-white bg-orange-500 border border-orange-500 hover:bg-orange-600 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
                             </li>
                             {% else %}
                             <li>
-                                <a href="?page={{ page_number }}" class="text-xs px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
+                                <a href="?page_ceotalk={{ page_number }}" class="text-xs px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
                             </li>
                             {% endif %}
                             {% endfor %}
                             <!-- 다음페이지 -->
-                            {% if post_list.has_next %}
+                            {% if board_ceotalk_list.has_next %}
                             <li>
-                                <a href="?page={{ post_list.next_page_number }}"  class="text-xs px-3 py-2 rounded-r-lg text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">다음</a>
+                                <a href="?page_ceotalk={{ board_ceotalk_list.next_page_number }}"  class="text-xs px-3 py-2 rounded-r-lg text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">다음</a>
                             </li>
                             {% else %}
                             <li>
@@ -217,7 +217,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for post in board_projectex %}
+                        {% for post in board_projectex_list %}
                         <tr class="text-xs bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                             <td class="px-6 py-2"><a href="{% url 'board:detail' post.id %}">{{ post.subject }}</a></td>
                             <td class="px-6 py-2">{{ post.create_date|date:"Y-m-d" }}</td>
@@ -231,9 +231,9 @@
                     <nav aria-label="Page navigation example" class="col-start-4 col-span-4 py-2">
                         <ul class="inline-flex -space-x-px">
                             <!-- 이전 페이지 -->
-                            {% if post_list.has_previous %}
+                            {% if board_projectex_list.has_previous %}
                             <li>
-                                <a href="?page={{ post_list.previous_page_number }}" class="text-xs px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">이전</a>
+                                <a href="?page_projectex={{ board_projectex_list.previous_page_number }}" class="text-xs px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">이전</a>
                             </li>
                             {% else %}
                             <li>
@@ -241,21 +241,21 @@
                             </li>
                             {% endif %}
                             <!-- 페이지 리스트 -->
-                            {% for page_number in post_list.paginator.page_range %}
-                            {% if page_number ==  post_list.number %}
+                            {% for page_number in board_projectex_list.paginator.page_range %}
+                            {% if page_number ==  board_projectex_list.number %}
                             <li>
-                                <a href="?page={{ page_number }}" aria-current="page" class="text-xs px-3 py-2 leading-tight text-white bg-orange-500 border border-gray-300 hover:bg-orange-600 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
+                                <a href="?page_projectex={{ page_number }}" aria-current="page" class="text-xs px-3 py-2 leading-tight text-white bg-orange-500 border border-orange-500 hover:bg-orange-600 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
                             </li>
                             {% else %}
                             <li>
-                                <a href="?page={{ page_number }}" class="text-xs px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
+                                <a href="?page_projectex={{ page_number }}" class="text-xs px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
                             </li>
                             {% endif %}
                             {% endfor %}
                             <!-- 다음페이지 -->
                             {% if post_list.has_next %}
                             <li>
-                                <a href="?page={{ post_list.next_page_number }}"  class="text-xs px-3 py-2 rounded-r-lg text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">다음</a>
+                                <a href="?page_projectex={{ board_projectex_list.next_page_number }}"  class="text-xs px-3 py-2 rounded-r-lg text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">다음</a>
                             </li>
                             {% else %}
                             <li>
@@ -284,7 +284,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for post in board_info %}
+                        {% for post in board_info_list %}
                         <tr class="text-xs bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                             <td class="px-6 py-2"><a href="{% url 'board:detail' post.id %}">{{ post.subject }}</a></td>
                             <td class="px-6 py-2">{{ post.create_date|date:"Y-m-d" }}</td>
@@ -298,9 +298,9 @@
                     <nav aria-label="Page navigation example" class="col-start-4 col-span-4 py-2">
                         <ul class="inline-flex -space-x-px">
                             <!-- 이전 페이지 -->
-                            {% if post_list.has_previous %}
+                            {% if board_info_list.has_previous %}
                             <li>
-                                <a href="?page={{ post_list.previous_page_number }}" class="text-xs px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">이전</a>
+                                <a href="?page_info={{ board_info_list.previous_page_number }}" class="text-xs px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">이전</a>
                             </li>
                             {% else %}
                             <li>
@@ -308,21 +308,21 @@
                             </li>
                             {% endif %}
                             <!-- 페이지 리스트 -->
-                            {% for page_number in post_list.paginator.page_range %}
-                            {% if page_number ==  post_list.number %}
+                            {% for page_number in board_info_list.paginator.page_range %}
+                            {% if page_number ==  board_info_list.number %}
                             <li>
-                                <a href="?page={{ page_number }}" aria-current="page" class="text-xs px-3 py-2 leading-tight text-white bg-orange-500 border border-gray-300 hover:bg-orange-600 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
+                                <a href="?page_info={{ page_number }}" aria-current="page" class="text-xs px-3 py-2 leading-tight text-white bg-orange-500 border border-orange-500 hover:bg-orange-600 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
                             </li>
                             {% else %}
                             <li>
-                                <a href="?page={{ page_number }}" class="text-xs px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
+                                <a href="?page_info={{ page_number }}" class="text-xs px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
                             </li>
                             {% endif %}
                             {% endfor %}
                             <!-- 다음페이지 -->
-                            {% if post_list.has_next %}
+                            {% if board_info_list.has_next %}
                             <li>
-                                <a href="?page={{ post_list.next_page_number }}"  class="text-xs px-3 py-2 rounded-r-lg text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">다음</a>
+                                <a href="?page_info={{ board_info_list.next_page_number }}"  class="text-xs px-3 py-2 rounded-r-lg text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">다음</a>
                             </li>
                             {% else %}
                             <li>
@@ -349,7 +349,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for post in board_ref %}
+                        {% for post in board_refo_list %}
                         <tr class="text-xs bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                             <td class="px-6 py-2"><a href="{% url 'board:detail' post.id %}">{{ post.subject }}</a></td>
                             <td class="px-6 py-2">{{ post.create_date|date:"Y-m-d" }}</td>
@@ -363,9 +363,9 @@
                     <nav aria-label="Page navigation example" class="col-start-4 col-span-4 py-2">
                         <ul class="inline-flex -space-x-px">
                             <!-- 이전 페이지 -->
-                            {% if post_list.has_previous %}
+                            {% if board_refo_list.has_previous %}
                             <li>
-                                <a href="?page={{ post_list.previous_page_number }}" class="text-xs px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">이전</a>
+                                <a href="?page_refo={{ board_refo_list.previous_page_number }}" class="text-xs px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">이전</a>
                             </li>
                             {% else %}
                             <li>
@@ -373,21 +373,21 @@
                             </li>
                             {% endif %}
                             <!-- 페이지 리스트 -->
-                            {% for page_number in post_list.paginator.page_range %}
-                            {% if page_number ==  post_list.number %}
+                            {% for page_number in board_refo_list.paginator.page_range %}
+                            {% if page_number ==  board_refo_list.number %}
                             <li>
-                                <a href="?page={{ page_number }}" aria-current="page" class="text-xs px-3 py-2 leading-tight text-white bg-orange-500 border border-gray-300 hover:bg-orange-600 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
+                                <a href="?page_refo={{ page_number }}" aria-current="page" class="text-xs px-3 py-2 leading-tight text-white bg-orange-500 border border-orange-500 hover:bg-orange-600 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
                             </li>
                             {% else %}
                             <li>
-                                <a href="?page={{ page_number }}" class="text-xs px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
+                                <a href="?page_refo={{ page_number }}" class="text-xs px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
                             </li>
                             {% endif %}
                             {% endfor %}
                             <!-- 다음페이지 -->
-                            {% if post_list.has_next %}
+                            {% if board_refo_list.has_next %}
                             <li>
-                                <a href="?page={{ post_list.next_page_number }}"  class="text-xs px-3 py-2 rounded-r-lg text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">다음</a>
+                                <a href="?page_refo={{ board_refo_list.next_page_number }}"  class="text-xs px-3 py-2 rounded-r-lg text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">다음</a>
                             </li>
                             {% else %}
                             <li>
@@ -416,7 +416,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for post in board_weeklynews %}
+                        {% for post in board_weeklynews_list %}
                         <tr class="text-xs bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                             <td class="px-6 py-2"><a href="{% url 'board:detail' post.id %}">{{ post.subject }}</a></td>
                             <td class="px-6 py-2">{{ post.create_date|date:"Y-m-d" }}</td>
@@ -430,9 +430,9 @@
                     <nav aria-label="Page navigation example" class="col-start-4 col-span-4 py-2">
                         <ul class="inline-flex -space-x-px">
                             <!-- 이전 페이지 -->
-                            {% if post_list.has_previous %}
+                            {% if board_weeklynews_list.has_previous %}
                             <li>
-                                <a href="?page={{ post_list.previous_page_number }}" class="text-xs px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">이전</a>
+                                <a href="?page_weeklynews={{ board_weeklynews_list.previous_page_number }}" class="text-xs px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">이전</a>
                             </li>
                             {% else %}
                             <li>
@@ -440,21 +440,21 @@
                             </li>
                             {% endif %}
                             <!-- 페이지 리스트 -->
-                            {% for page_number in post_list.paginator.page_range %}
-                            {% if page_number ==  post_list.number %}
+                            {% for page_number in board_weeklynews_list.paginator.page_range %}
+                            {% if page_number ==  board_weeklynews_list.number %}
                             <li>
-                                <a href="?page={{ page_number }}" aria-current="page" class="text-xs px-3 py-2 leading-tight text-white bg-orange-500 border border-gray-300 hover:bg-orange-600 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
+                                <a href="?page_weeklynews={{ page_number }}" aria-current="page" class="text-xs px-3 py-2 leading-tight text-white bg-orange-500 border border-orange-500 hover:bg-orange-600 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
                             </li>
                             {% else %}
                             <li>
-                                <a href="?page={{ page_number }}" class="text-xs px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
+                                <a href="?page_weeklynews={{ page_number }}" class="text-xs px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
                             </li>
                             {% endif %}
                             {% endfor %}
                             <!-- 다음페이지 -->
-                            {% if post_list.has_next %}
+                            {% if board_weeklynews_list.has_next %}
                             <li>
-                                <a href="?page={{ post_list.next_page_number }}"  class="text-xs px-3 py-2 rounded-r-lg text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">다음</a>
+                                <a href="?page_weeklynews={{ board_weeklynews_list.next_page_number }}"  class="text-xs px-3 py-2 rounded-r-lg text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">다음</a>
                             </li>
                             {% else %}
                             <li>
@@ -481,7 +481,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for post in board_labnewsroom %}
+                        {% for post in board_labnewsroom_list %}
                         <tr class="text-xs bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                             <td class="px-6 py-2"><a href="{% url 'board:detail' post.id %}">{{ post.subject }}</a></td>
                             <td class="px-6 py-2">{{ post.create_date|date:"Y-m-d" }}</td>
@@ -495,9 +495,9 @@
                     <nav aria-label="Page navigation example" class="col-start-4 col-span-4 py-2">
                         <ul class="inline-flex -space-x-px">
                             <!-- 이전 페이지 -->
-                            {% if post_list.has_previous %}
+                            {% if board_labnewsroom_list.has_previous %}
                             <li>
-                                <a href="?page={{ post_list.previous_page_number }}" class="text-xs px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">이전</a>
+                                <a href="?page_labnewsroom={{ board_labnewsroom_list.previous_page_number }}" class="text-xs px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">이전</a>
                             </li>
                             {% else %}
                             <li>
@@ -505,21 +505,21 @@
                             </li>
                             {% endif %}
                             <!-- 페이지 리스트 -->
-                            {% for page_number in post_list.paginator.page_range %}
-                            {% if page_number ==  post_list.number %}
+                            {% for page_number in board_labnewsroom_list.paginator.page_range %}
+                            {% if page_number ==  board_labnewsroom_list.number %}
                             <li>
-                                <a href="?page={{ page_number }}" aria-current="page" class="text-xs px-3 py-2 leading-tight text-white bg-orange-500 border border-gray-300 hover:bg-orange-600 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
+                                <a href="?page_labnewsroom={{ page_number }}" aria-current="page" class="text-xs px-3 py-2 leading-tight text-white bg-orange-500 border border-orange-500 hover:bg-orange-600 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
                             </li>
                             {% else %}
                             <li>
-                                <a href="?page={{ page_number }}" class="text-xs px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
+                                <a href="?page_labnewsroom={{ page_number }}" class="text-xs px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
                             </li>
                             {% endif %}
                             {% endfor %}
                             <!-- 다음페이지 -->
-                            {% if post_list.has_next %}
+                            {% if board_labnewsroom_list.has_next %}
                             <li>
-                                <a href="?page={{ post_list.next_page_number }}"  class="text-xs px-3 py-2 rounded-r-lg text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">다음</a>
+                                <a href="?page_labnewsroom={{ board_labnewsroom_list.next_page_number }}"  class="text-xs px-3 py-2 rounded-r-lg text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">다음</a>
                             </li>
                             {% else %}
                             <li>
@@ -548,7 +548,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for post in board_client %}
+                        {% for post in board_client_list %}
                         <tr class="text-xs bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                             <td class="px-6 py-2"><a href="{% url 'board:detail' post.id %}">{{ post.subject }}</a></td>
                             <td class="px-6 py-2">{{ post.create_date|date:"Y-m-d" }}</td>
@@ -562,9 +562,9 @@
                     <nav aria-label="Page navigation example" class="col-start-4 col-span-4 py-2">
                         <ul class="inline-flex -space-x-px">
                             <!-- 이전 페이지 -->
-                            {% if post_list.has_previous %}
+                            {% if board_client_list.has_previous %}
                             <li>
-                                <a href="?page={{ post_list.previous_page_number }}" class="text-xs px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">이전</a>
+                                <a href="?page_client={{ board_client_list.previous_page_number }}" class="text-xs px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">이전</a>
                             </li>
                             {% else %}
                             <li>
@@ -572,21 +572,21 @@
                             </li>
                             {% endif %}
                             <!-- 페이지 리스트 -->
-                            {% for page_number in post_list.paginator.page_range %}
-                            {% if page_number ==  post_list.number %}
+                            {% for page_number in board_client_list.paginator.page_range %}
+                            {% if page_number ==  board_client_list.number %}
                             <li>
-                                <a href="?page={{ page_number }}" aria-current="page" class="text-xs px-3 py-2 leading-tight text-white bg-orange-500 border border-gray-300 hover:bg-orange-600 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
+                                <a href="?page_client={{ page_number }}" aria-current="page" class="text-xs px-3 py-2 leading-tight text-white bg-orange-500 border border-orange-500 hover:bg-orange-600 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
                             </li>
                             {% else %}
                             <li>
-                                <a href="?page={{ page_number }}" class="text-xs px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
+                                <a href="?page_client={{ page_number }}" class="text-xs px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
                             </li>
                             {% endif %}
                             {% endfor %}
                             <!-- 다음페이지 -->
-                            {% if post_list.has_next %}
+                            {% if board_client_list.has_next %}
                             <li>
-                                <a href="?page={{ post_list.next_page_number }}"  class="text-xs px-3 py-2 rounded-r-lg text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">다음</a>
+                                <a href="?page_client={{ board_client_list.next_page_number }}"  class="text-xs px-3 py-2 rounded-r-lg text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">다음</a>
                             </li>
                             {% else %}
                             <li>
@@ -613,7 +613,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for post in board_forum %}
+                        {% for post in board_forum_list %}
                         <tr class="text-xs bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                             <td class="px-6 py-2"><a href="{% url 'board:detail' post.id %}">{{ post.subject }}</a></td>
                             <td class="px-6 py-2">{{ post.create_date|date:"Y-m-d" }}</td>
@@ -627,9 +627,9 @@
                     <nav aria-label="Page navigation example" class="col-start-4 col-span-4 py-2">
                         <ul class="inline-flex -space-x-px">
                             <!-- 이전 페이지 -->
-                            {% if post_list.has_previous %}
+                            {% if board_forum_list.has_previous %}
                             <li>
-                                <a href="?page={{ post_list.previous_page_number }}" class="text-xs px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">이전</a>
+                                <a href="?page_forum={{ board_forum_list.previous_page_number }}" class="text-xs px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">이전</a>
                             </li>
                             {% else %}
                             <li>
@@ -637,21 +637,21 @@
                             </li>
                             {% endif %}
                             <!-- 페이지 리스트 -->
-                            {% for page_number in post_list.paginator.page_range %}
-                            {% if page_number ==  post_list.number %}
+                            {% for page_number in board_forum_list.paginator.page_range %}
+                            {% if page_number ==  board_forum_list.number %}
                             <li>
-                                <a href="?page={{ page_number }}" aria-current="page" class="text-xs px-3 py-2 leading-tight text-white bg-orange-500 border border-gray-300 hover:bg-orange-600 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
+                                <a href="?page_forum={{ page_number }}" aria-current="page" class="text-xs px-3 py-2 leading-tight text-white bg-orange-500 border border-orange-500 hover:bg-orange-600 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
                             </li>
                             {% else %}
                             <li>
-                                <a href="?page={{ page_number }}" class="text-xs px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
+                                <a href="?page_forum={{ page_number }}" class="text-xs px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page_number }}</a>
                             </li>
                             {% endif %}
                             {% endfor %}
                             <!-- 다음페이지 -->
-                            {% if post_list.has_next %}
+                            {% if board_forum_list.has_next %}
                             <li>
-                                <a href="?page={{ post_list.next_page_number }}"  class="text-xs px-3 py-2 rounded-r-lg text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">다음</a>
+                                <a href="?page_forum={{ board_forum_list.next_page_number }}"  class="text-xs px-3 py-2 rounded-r-lg text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">다음</a>
                             </li>
                             {% else %}
                             <li>

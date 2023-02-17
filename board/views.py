@@ -1,7 +1,6 @@
 #import logging
 
 from django.core.paginator import Paginator
-from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -19,43 +18,62 @@ from .forms import *
 @login_required(login_url='common:login')
 def home(request):
     #logger.info("INFO 레벨로 출력")
-    page = request.GET.get('page', '1')  # 페이지
-    kw = request.GET.get('kw', '')  # 검색어
-    post_list = Post.objects.order_by('-create_date')
-    board_announce = Post.objects.filter(board_name='announce')
-    board_daretalk = Post.objects.filter(board_name='daretalk')
-    board_labnewsroom = Post.objects.filter(board_name='labnewsroom')
-    board_projectex = Post.objects.filter(board_name='projectex')
-    board_info = Post.objects.filter(board_name='info')
-    board_ref = Post.objects.filter(board_name='ref')
-    board_weeklynews = Post.objects.filter(board_name='weeklynews')
-    board_ceotalk = Post.objects.filter(board_name='ceotalk')
-    board_client = Post.objects.filter(board_name='client')
-    board_forum = Post.objects.filter(board_name='forum')
-    if kw:
-        post_list = post_list.filter(
-            Q(subject__icontains=kw) |  # 제목
-            Q(content__icontains=kw) |  # 내용
-            Q(comment__content__icontains=kw) |  # 답변내용
-            Q(author__username__icontains=kw) |  # 질문 글쓴이
-            Q(comment__author__username__icontains=kw)  # 답변 글쓴이
-        ).distinct()
-    paginator = Paginator(post_list, 7)  # 페이지당 10개씩 보여주기
-    page_obj = paginator.get_page(page)
+
+    board_announce_list = Post.objects.filter(board_name='announce')
+    board_daretalk_list = Post.objects.filter(board_name='daretalk')
+    board_labnewsroom_list = Post.objects.filter(board_name='labnewsroom')
+    board_projectex_list = Post.objects.filter(board_name='projectex')
+    board_info_list = Post.objects.filter(board_name='info')
+    board_refo_list = Post.objects.filter(board_name='refo')
+    board_weeklynews_list = Post.objects.filter(board_name='weeklynews')
+    board_ceotalk_list = Post.objects.filter(board_name='ceotalk')
+    board_client_list = Post.objects.filter(board_name='client')
+    board_forum_list = Post.objects.filter(board_name='forum')
+
+    page_announce = request.GET.get('page_announce', '1')
+    page_daretalk = request.GET.get('page_daretalk', '1')
+    page_labnewsroom = request.GET.get('page_labnewsroom', '1')
+    page_projectex = request.GET.get('page_projectex', '1')
+    page_info = request.GET.get('page_info', '1')
+    page_refo = request.GET.get('page_refo', '1')
+    page_weeklynews = request.GET.get('page_weeklynews', '1')
+    page_ceotalk = request.GET.get('page_ceotalk', '1')
+    page_client = request.GET.get('page_client', '1')
+    page_forum = request.GET.get('page_forum', '1')
+
+    paginator_announce = Paginator(board_announce_list, 7)
+    paginator_daretalk = Paginator(board_daretalk_list, 7)
+    paginator_labnewsroom = Paginator(board_labnewsroom_list, 7)
+    paginator_projectex = Paginator(board_projectex_list, 7)
+    paginator_info = Paginator(board_info_list, 7)
+    paginator_refo = Paginator(board_refo_list, 7)
+    paginator_weeklynews = Paginator(board_weeklynews_list, 7)
+    paginator_ceotalk = Paginator(board_ceotalk_list, 7)
+    paginator_client = Paginator(board_client_list, 7)
+    paginator_forum = Paginator(board_forum_list, 7)
+
+    page_announce_obj =  paginator_announce.get_page(page_announce)
+    page_daretalk_obj =  paginator_daretalk.get_page(page_daretalk)
+    page_labnewsroom_obj =  paginator_labnewsroom.get_page(page_labnewsroom)
+    page_projectex_obj =  paginator_projectex.get_page(page_projectex)
+    page_info_obj =  paginator_info.get_page(page_info)
+    page_refo_obj =  paginator_refo.get_page(page_refo)
+    page_weeklynews_obj =  paginator_weeklynews.get_page(page_weeklynews)
+    page_ceotalk_obj =  paginator_ceotalk.get_page(page_ceotalk)
+    page_client_obj =  paginator_client.get_page(page_client)
+    page_forum_obj =  paginator_forum.get_page(page_forum)
+
     context = {
-        'post_list': page_obj,
-        'page': page,
-        'kw': kw, 
-        'board_announce':board_announce,
-        'board_daretalk':board_daretalk,
-        'board_labnewsroom':board_labnewsroom,
-        'board_projectex':board_projectex,
-        'board_info':board_info,
-        'board_ref':board_ref,
-        'board_weeklynews':board_weeklynews,
-        'board_ceotalk':board_ceotalk,
-        'board_client':board_client,
-        'board_forum':board_forum,
+        'board_announce_list': page_announce_obj,
+        'board_daretalk_list': page_daretalk_obj,
+        'board_labnewsroom_list': page_labnewsroom_obj,
+        'board_projectex_list': page_projectex_obj,
+        'board_info_list': page_info_obj,
+        'board_refo_list': page_refo_obj,
+        'board_weeklynews_list': page_weeklynews_obj,
+        'board_ceotalk_list': page_ceotalk_obj,
+        'board_client_list': page_client_obj,
+        'board_forum_list': page_forum_obj, 
         }
     return render(request, 'home.html', context)
 
@@ -158,52 +176,3 @@ def comment_delete(request, comment_id):
     else:
         comment.delete()
     return redirect('pybo:detail', post_id=comment.post.id)
-
-
-
-
-
-"""
-@login_required(login_url='common:login')
-def home(request):
-    #logger.info("INFO 레벨로 출력")
-    page = request.GET.get('page', '1')  # 페이지
-    kw = request.GET.get('kw', '')  # 검색어
-    post_list = Post.objects.order_by('-create_date')
-    board_announce = Post.objects.filter(board_name='announce')
-    board_daretalk = Post.objects.filter(board_name='daretalk')
-    board_labnewsroom = Post.objects.filter(board_name='labnewsroom')
-    board_projectex = Post.objects.filter(board_name='projectex')
-    board_info = Post.objects.filter(board_name='info')
-    board_ref = Post.objects.filter(board_name='ref')
-    board_weeklynews = Post.objects.filter(board_name='weeklynews')
-    board_ceotalk = Post.objects.filter(board_name='ceotalk')
-    board_client = Post.objects.filter(board_name='client')
-    board_forum = Post.objects.filter(board_name='forum')
-    if kw:
-        post_list = post_list.filter(
-            Q(subject__icontains=kw) |  # 제목
-            Q(content__icontains=kw) |  # 내용
-            Q(comment__content__icontains=kw) |  # 답변내용
-            Q(author__username__icontains=kw) |  # 질문 글쓴이
-            Q(comment__author__username__icontains=kw)  # 답변 글쓴이
-        ).distinct()
-    paginator = Paginator(post_list, 7)  # 페이지당 10개씩 보여주기
-    page_obj = paginator.get_page(page)
-    context = {
-        'post_list': page_obj,
-        'page': page,
-        'kw': kw, 
-        'board_announce':board_announce,
-        'board_daretalk':board_daretalk,
-        'board_labnewsroom':board_labnewsroom,
-        'board_projectex':board_projectex,
-        'board_info':board_info,
-        'board_ref':board_ref,
-        'board_weeklynews':board_weeklynews,
-        'board_ceotalk':board_ceotalk,
-        'board_client':board_client,
-        'board_forum':board_forum,
-        }
-    return render(request, 'home.html', context)
-    """
