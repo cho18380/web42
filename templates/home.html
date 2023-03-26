@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- Main Content -->
+<main class="flex-grow container mx-auto">
+    <!-- Blog post section -->
+    <section class="py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-5xl mx-auto">
+            <!-- Blog post -->
+            {% if post_list %}
+            <ul>
+                {% for post in post_list %}
+                <div class="mt-10">
+                    <div class="border border-gray-200 bg-white shadow-md rounded-lg overflow-hidden flex">
+                        <div class="w-2/3 p-6">
+                            <a href="{{ post.id }}"
+                                class="block text-lg font-semibold mb-2 text-gray-800 hover:text-orange-500">{{ post.title }}</a>
+                            <p class="text-gray-700 leading-relaxed mb-3">{{ post.content }}</p>
+                            <a href="{{ post.id }}" class="text-orange-500 inline-flex items-center">Read more</a>
+                        </div>
+                        <div class="p-3 w-1/3">
+                            <a href="{{ post.id }}">
+                                <img class="rounded-lg w-full h-48 object-cover"
+                                    src="https://phx02pap002files.storage.live.com/y4mreyLDQPfmMLRYDK2xqwEsyygLMnNjbsbs_5DrJfv2RaDwtw-9SlflAmaWJ6EvyOA0dDI-iNlaWZwtKktI6QrPNi8tKrXi8ZKfY2EvJ9xssDFJ0kH5gdyIDQrHP3eYqxd4Us9qnbPIXw8xuV3QsIbpVUFsweoXbtcBVbTqqIEfB-wcl8HdogVzLQp1MdewAwZ?width=3024&height=4032&cropmode=none"
+                                    alt="Blog post cover image">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+    </section>
+</main>
+
+
+
+
+
+{% endblock content %}
