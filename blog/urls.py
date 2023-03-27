@@ -1,4 +1,5 @@
 from django.urls import path
+from django.contrib.auth import views as auth_views
 from .views import *
 
 app_name = 'blog'
@@ -7,7 +8,8 @@ urlpatterns = [
     # base
     path('', home, name='home'),
     path('<int:post_id>/', post_detail, name='detail'),
-    path('login/', login, name='login'),
+    path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 
     # post
     path('create/', post_create, name='post_create'),
