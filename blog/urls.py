@@ -13,8 +13,8 @@ urlpatterns = [
 
     # post
     path('create/', post_create, name='post_create'),
-    #path('post/modify/<int:post_id>/', post_modify, name='post_modify'),
-    #path('post/delete/<int:post_id>/', post_delete, name='post_delete'),
+    path('post/modify/<int:post_id>/', post_modify, name='post_modify'),
+    path('post/delete/<int:post_id>/', post_delete, name='post_delete'),
 
     # comment
     #path('comment/create/<int:post_id>/', comment_create, name='comment_create'),

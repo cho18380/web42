@@ -5,6 +5,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 
 def home(request):
@@ -30,3 +31,28 @@ def post_create(request):
     else:
         form = PostForm()
     return render(request, 'post_create.html', {'form': form})
+
+
+@login_required
+def post_modify(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    if request.method == 'POST':
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.updated_at = timezone.now()
+            post.save()
+            return redirect('blog:detail', post_id=post.id)
+    else:
+        form = PostForm(instance=post)
+
+    return render(request, 'post_create.html', {'form': form})
+
+@login_required
+def post_delete(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    if request.user != post.author:
+        messages.error(request, '삭제권한이 없습니다')
+        return redirect('blog:detail', post_id=post.id)
+    post.delete()
+    return redirect('blog:home')
