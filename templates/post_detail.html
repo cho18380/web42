@@ -7,20 +7,15 @@
         <article
             class="mx-auto w-full max-w-2xl format format-sm sm:format-base lg:format-lg format-blue">
             <header class="mb-4 lg:mb-6 not-format">
-                <address class="flex items-center mb-6 not-italic">
+                <address class="flex flex-col items-left mb-6 not-italic">
+                    <h1 class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl">{{ post.title }}</h1>
                     <div class="inline-flex items-center mr-3 text-sm text-gray-900">
-                        <img class="mr-4 w-16 h-16 rounded-full" src="https://images.unsplash.com/photo-1614729939124-032f0b56c9ce?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTQ4fHwlRUMlOUElQjAlRUMlQTMlQkN8ZW58MHx8MHx8&auto=format&fit=crop&w=700&q=60" alt="">
                         <div>
-                            <a href="#" rel="author" class="text-xl font-bold text-gray-900">{{ post.author }}</a>
-                            <p class="text-base font-light text-gray-500">{{ post.created_at }}</p>
+                            <p class="text-lg text-gray-400">Published by {{ post.author }} /// {{ post.created_at|date:'Y-m-d'}}</p>
                         </div>
                     </div>
                 </address>
-                <h1
-                    class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl">
-                    {{ post.title }}</h1>
-                <img src="{{ post.image_link }}"
-                    alt="이미지가 없습니다.">
+                <img class="w-full" src="{{ post.image_link }}" alt="이미지가 없습니다.">
             </header>
             <p class="lead">{{ post.content|safe }}</p>
             <div class="flex">
