@@ -22,7 +22,7 @@
                 <img src="{{ post.image_link }}"
                     alt="이미지가 없습니다.">
             </header>
-            <p class="lead">{{ post.content }}</p>
+            <p class="lead">{{ post.content|safe }}</p>
             <div class="flex">
                 {% if request.user == post.author %}
                 <a href="{% url 'blog:post_modify' post.id %}"

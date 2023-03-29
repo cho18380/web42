@@ -10,8 +10,6 @@
             <div class="border border-gray-200 shadow-md rounded-lg my-10 p-5">
                 <h3 class="text-lg font-semibold mb-4 text-gray-800">Book mark</h3>
                 <ul class="text-gray-700">
-                    <li class="mb-2"><a href="https://www.clien.net" target="_blank">Clien</a></li>
-                    <li class="mb-2"><a href="https://www.kaiprotocol.fi" target="_blank">Kai</a></li>
                     <li class="mb-2"><a href="https://www.youtube.com" target="_blank">Youtube</a></li>
                     <li class="mb-2"><a href="https://wikidocs.net/book/4223" target="_blank">Jump to django</a></li>
                     <li class="mb-2"><a href="https://justdjango.com/" target="_blank">Justdjango</a></li>
@@ -31,20 +29,20 @@
                 <ul>
                     {% for post in post_list %}
                     <div class="mt-10">
-                        <div class="border border-gray-200 bg-white shadow-md rounded-lg overflow-hidden flex">
-                            <div class="w-2/3 p-6">
-                                <a href="{{ post.id }}"
-                                    class="block text-lg font-semibold mb-2 text-gray-800 hover:text-orange-500">{{ post.title }}</a>
-                                <p class="text-gray-700 leading-relaxed mb-3">{{ post.content }}</p>
-                                <a href="{{ post.id }}" class="text-orange-500 inline-flex items-center">Read more</a>
+                        <div class="border border-gray-200 bg-white shadow-md rounded-lg overflow-hidden">
+                            <div class="flex flex-col flex-col-reverse md:flex md:flex-row ">
+                                <div class="md:w-2/3 p-6">
+                                    <a href="{{ post.id }}" class="block text-lg font-semibold mb-2 text-gray-800 hover:text-orange-500">{{ post.title }}</a>
+                                    <p class="text-gray-700 leading-relaxed mb-3">{{ post.overview|safe }}</p>
+                                    <a href="{{ post.id }}" class="text-orange-500 inline-flex items-center">Read more</a>
+                                </div>
+                                <div class="md:w-1/3 md:p-3">
+                                    <a href="{{ post.id }}">
+                                        <img class="md:rounded-lg w-full h-48 object-cover" src="{{ post.image_link }}" alt="이미지가 없습니다.">
+                                    </a>
+                                </div>
                             </div>
-                            <div class="p-3 w-1/3">
-                                <a href="{{ post.id }}">
-                                    <img class="rounded-lg w-full h-48 object-cover" src="{{ post.image_link }}"
-                                        alt="이미지가 없습니다.">
-                                </a>
-                            </div>
-                        </div>
+                        </div>                        
                     </div>
                     {% endfor %}
                 </ul>
