@@ -1,58 +1,55 @@
-<nav class="border border-gray-200 bg-white px-4 py-5 mb-8 md:mb-10 font-mono">
+<nav class="border border-gray-200 bg-white px-4 py-5 mb-8 md:mb-10">
     <div class="max-w-7xl mx-auto">
-        <div class="flex justify-between items-center">
+        <div class="flex flex-wrap justify-between items-center mx-auto">
             <div class="flex items-center">
                 <a href="{% url 'blog:home' %}" class="flex items-center">
-                    <img src="https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDV8fHNpbXBsZSUyMGxvZ298ZW58MHx8MHx8&auto=format&fit=crop&w=700&q=60"
-                        alt="Logo" class="w-8 h-8 mr-2">
-                    <span class="text-lg font-semibold text-blue-500 font-serif">먹보권</span>
+                    <img src="https://phx02pap002files.storage.live.com/y4mOS2ZDcdg2EMpIUHhT8_7oyMFScKCECAB50xLbWZQuU52Dn_-ScE7m1l0g_EzBynOOevU1pjPnt6rflG_WfRr8xMcS5CvpE11F2bGTauHTT_hLOXQj4XRfpetuqeTLfyRn2i590v2X8Xup03kGZLWhbeQloEe7AIUGlorKLBWIRgCOnoo8bjnJVo5Z8TIzrCJ?width=1840&height=1840&cropmode=none"
+                        alt="Logo" class="rounded-full w-8 h-8 mr-2">
+                    <span class="text-lg font-semibold">MBK</span>
                 </a>
             </div>
-            <div class="flex md:hidden">
-                <button class="mobile-menu-button">
-                    <svg class="w-6 h-6 fill-current text-gray-600" viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <title>Menu</title>
-                        <path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z" />
-                    </svg>
-                </button>
-            </div>
-            <div class="hidden md:flex items-center">
-                <ul class="flex space-x-4">
-                    <li><a href="{% url 'blog:home' %}" class="text-gray-600 hover:text-gray-900">Home</a></li>
+            <button id="nav-toggle" class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+                aria-controls="navbar-default" aria-expanded="false">
+                <span class="sr-only">Open main menu</span>
+                <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                        d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                        clip-rule="evenodd"></path>
+                </svg>
+            </button>
+            <div class="hidden w-full md:block md:w-auto" id="nav-content">
+                <ul
+                    class="flex flex-col p-1 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-md md:font-bold md:border-0 md:bg-white">
+                    <li>
+                        <a href="{% url 'blog:home' %}"
+                            class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0">Home</a>
+                    </li>
                     <li>
                         {% if user.is_authenticated %}
-                        <a href="{% url 'blog:logout' %}" class="text-gray-600 hover:text-gray-900">{{ user.username }}</a>
+                        <a href="{% url 'blog:logout' %}"
+                            class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0">{{ user.username }}</a>
                         {% else %}
-                        <a href="{% url 'blog:login' %}" class="text-gray-600 hover:text-gray-900">Login</a>
+                        <a href="{% url 'blog:login' %}"
+                            class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0">Login</a>
                         {% endif %}
                     </li>
-                    <li><a href="{% url 'blog:post_create' %}" class="text-gray-600 hover:text-gray-900">Posting</a>
+                    <li>
+                        <a href="{% url 'blog:post_create' %}"
+                            class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0">Posting</a>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
-    <div class="hidden mobile-menu md:hidden">
-        <ul class="flex flex-col space-y-4">
-            <li><a href="{% url 'blog:home' %}" class="text-gray-600 hover:text-gray-900">Home</a></li>
-            <li>
-                {% if user.is_authenticated %}
-                <a href="{% url 'blog:logout' %}" class="text-gray-600 hover:text-gray-900">{{ user.username }}</a>
-                {% else %}
-                <a href="{% url 'blog:login' %}" class="text-gray-600 hover:text-gray-900">Login</a>
-                {% endif %}
-            </li>
-            <li><a href="{% url 'blog:post_create' %}" class="text-gray-600 hover:text-gray-900">Posting</a></li>
-        </ul>
-    </div>
 </nav>
 
-<script>
-    const button = document.querySelector('.mobile-menu-button');
-    const menu = document.querySelector('.mobile-menu');
 
-    button.addEventListener('click', () => {
-        menu.classList.toggle('hidden');
+<script>
+    const toggleButton = document.getElementById("nav-toggle");
+    const navContent = document.getElementById("nav-content");
+  
+    toggleButton.addEventListener("click", () => {
+      navContent.classList.toggle("hidden");
     });
-</script>
+  </script>
