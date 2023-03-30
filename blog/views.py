@@ -1,8 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import *
 from .forms import PostForm
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import authenticate, login
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages

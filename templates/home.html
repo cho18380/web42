@@ -3,11 +3,11 @@
 {% block content %}
 
 <!-- Main Content -->
-<main class="flex-grow container max-w-7xl mx-auto">
+<main class="flex-grow container max-w-7xl mx-auto pt-0 mt-0">
     <div class="flex flex-wrap">
         <!-- Sidebar section -->
         <aside class="hidden md:block w-full sm:w-1/4 px-4 sm:px-6 lg:px-8 pb-12 order-2 sm:order-1">
-            <div class="border border-gray-200 shadow-md rounded-lg my-10 p-5">
+            <div class="border border-gray-200 shadow-md rounded-lg mt-0 p-5">
                 <h3 class="text-lg font-semibold mb-4 text-gray-800">Book mark</h3>
                 <ul class="text-gray-700">
                     <li class="mb-2"><a href="https://www.youtube.com" target="_blank">Youtube</a></li>
@@ -17,18 +17,19 @@
                     <li class="mb-2"><a href="https://tailwindcss.com/" target="_blank">Tailwind</a></li>
                     <li class="mb-2"><a href="https://developer.mozilla.org/ko/" target="_blank">MDN</a></li>
                     <li class="mb-2"><a href="https://flowbite.com/" target="_blank">Flowbite</a></li>
+                    <li class="mb-2"><a href="https://chat.openai.com/" target="_blank">Chatgpt</a></li>
                 </ul>
             </div>
         </aside>
 
         <!-- Blog post section -->
-        <section class="w-full sm:w-3/4 pb-12 px-4 sm:px-6 lg:px-8 order-1 sm:order-2">
-            <div class="max-w-3xl mx-0">
+        <section class="w-full sm:w-3/4 pb-12 px-4 sm:px-0 order-1 sm:order-2">
+            <div class="max-w-3xl mx-0 mt-0">
                 <!-- Blog post -->
                 {% if post_list %}
                 <ul>
                     {% for post in post_list %}
-                    <div class="mt-10">
+                    <div class="mb-10">
                         <div class="border border-gray-200 bg-white shadow-md rounded-lg overflow-hidden">
                             <div class="flex flex-col flex-col-reverse md:flex md:flex-row ">
                                 <div class="md:w-2/3 p-6">

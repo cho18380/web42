@@ -11,11 +11,12 @@
                     <h1 class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl">{{ post.title }}</h1>
                     <div class="inline-flex items-center mr-3 text-sm text-gray-900">
                         <div>
-                            <p class="text-lg text-gray-400">Published by {{ post.author }} /// {{ post.created_at|date:'Y-m-d'}}</p>
+                            <p class="text-lg text-gray-400">Published by {{ post.author }}</p>
+                            <p class="text-md text-gray-400">{{ post.created_at|date:'Y-m-d'}}</p>
                         </div>
                     </div>
                 </address>
-                <img class="w-full" src="{{ post.image_link }}" alt="이미지가 없습니다.">
+                <img class="w-full rounded-xl" src="{{ post.image_link }}" alt="이미지가 없습니다.">
             </header>
             <p class="lead">{{ post.content|safe }}</p>
             <div class="flex">
@@ -25,7 +26,7 @@
                 <form method="post" action="{% url 'blog:post_delete' post.id %}">
                     {% csrf_token %}
                     <button type="submit"
-                        class="inline-block text-center my-4 py-2 px-4 bg-red-500 text-white font-bold rounded hover:bg-red-700">Delete</button>
+                        class="inline-block text-center my-4 mx-2 py-2 px-4 bg-red-500 text-white font-bold rounded hover:bg-red-700">Delete</button>
                 </form>
                 {% endif %}
             </div>
